@@ -5363,7 +5363,7 @@ the following modifications have been made:
 +		zval *result = NULL;
 +		
 +		/*long orig_execution_depth = SPG(execution_depth);*/
-+		zend_bool orig_safe_mode = PG(safe_mode);
++		/*zend_bool orig_safe_mode = PG(safe_mode);*/
 +		char *orig_basedir = PG(open_basedir);
 +		
 +		char *phpscript = SPG(log_phpscriptname);
@@ -5400,14 +5400,14 @@ the following modifications have been made:
 +				
 +				/*SPG(execution_depth) = 0;*/
 +				if (SPG(log_phpscript_is_safe)) {
-+					PG(safe_mode) = 0;
++					/*PG(safe_mode) = 0;*/
 +					PG(open_basedir) = NULL;
 +				}
 +				
 +				zend_execute(new_op_array TSRMLS_CC);
 +				
 +				/*SPG(execution_depth) = orig_execution_depth;*/
-+				PG(safe_mode) = orig_safe_mode;
++				/*PG(safe_mode) = orig_safe_mode;*/
 +				PG(open_basedir) = orig_basedir;
 +				
 +#ifdef ZEND_ENGINE_2
