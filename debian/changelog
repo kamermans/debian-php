@@ -1,3 +1,13 @@
+php5 (5.4.0~beta2-1) experimental; urgency=low
+
+  * Remove obsolete sqlite(2) module from php5-sqlite
+  * Use correct signals in php5-fpm init script (Closes: #645934)
+  * Update gbp.conf for experimental branch
+  * Imported Upstream version 5.4.0~beta2
+  * Refresh patches for the 5.4.0beta2 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 21 Oct 2011 12:17:39 +0200
+
 php5 (5.3.8-2) unstable; urgency=low
 
   * Fix botched upload when git-buildpackage didn't play well with
