@@ -42,7 +42,7 @@ Reviewed-by: Steve Langasek <steve.langasek@ubuntu.com>
      
 --- a/acinclude.m4
 +++ b/acinclude.m4
-@@ -2286,7 +2286,7 @@ AC_DEFUN([PHP_SETUP_KERBEROS],[
+@@ -2282,7 +2282,7 @@ AC_DEFUN([PHP_SETUP_KERBEROS],[
      fi
  
      for i in $PHP_KERBEROS; do
@@ -51,7 +51,7 @@ Reviewed-by: Steve Langasek <steve.langasek@ubuntu.com>
          PHP_KERBEROS_DIR=$i
          break
        fi
-@@ -2363,7 +2363,7 @@ AC_DEFUN([PHP_SETUP_OPENSSL],[
+@@ -2359,7 +2359,7 @@ AC_DEFUN([PHP_SETUP_OPENSSL],[
        if test -r $i/include/openssl/evp.h; then
          OPENSSL_INCDIR=$i/include
        fi

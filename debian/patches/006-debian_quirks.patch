@@ -6,16 +6,16 @@ Last-Update: 2010-01-18
 
 --- a/configure.in
 +++ b/configure.in
-@@ -1061,7 +1061,7 @@ if test "$PHP_CLI" = "no"; then
+@@ -1068,7 +1068,7 @@ if test "$PHP_CLI" = "no"; then
  fi
  
  PHP_ARG_WITH(pear, [whether to install PEAR],
--[  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php]
-+[  --with-pear=DIR         Install PEAR in DIR [PREFIX/lib/php5]
+-[  --with-pear=DIR         Install PEAR in DIR @<:@PREFIX/lib/php@:>@
++[  --with-pear=DIR         Install PEAR in DIR @<:@PREFIX/lib/php5@:>@
    --without-pear          Do not install PEAR], DEFAULT, yes)
  
  if test "$PHP_PEAR" != "no"; then
-@@ -1091,7 +1091,7 @@ dnl
+@@ -1098,7 +1098,7 @@ dnl
    if test "$PHP_PEAR" = "DEFAULT" || test "$PHP_PEAR" = "yes"; then
      case $PHP_LAYOUT in
        GNU) PEAR_INSTALLDIR=$datadir/pear;;
@@ -24,7 +24,7 @@ Last-Update: 2010-01-18
      esac
    fi
  
-@@ -1146,12 +1146,12 @@ test "$program_suffix" = "NONE" && progr
+@@ -1153,12 +1153,12 @@ test "$program_suffix" = "NONE" && progr
  
  case $libdir in
    '${exec_prefix}/lib')
@@ -39,7 +39,7 @@ Last-Update: 2010-01-18
      ;;
  esac
  
-@@ -1218,7 +1218,7 @@ EXPANDED_SYSCONFDIR=`eval echo $sysconfd
+@@ -1225,7 +1225,7 @@ EXPANDED_SYSCONFDIR=`eval echo $sysconfd
  EXPANDED_DATADIR=$datadir
  EXPANDED_PHP_CONFIG_FILE_PATH=`eval echo "$PHP_CONFIG_FILE_PATH"`
  EXPANDED_PHP_CONFIG_FILE_SCAN_DIR=`eval echo "$PHP_CONFIG_FILE_SCAN_DIR"`
@@ -61,7 +61,7 @@ Last-Update: 2010-01-18
  ## convert skel_dir to full path
 --- a/php.ini-development
 +++ b/php.ini-development
-@@ -690,7 +690,7 @@ default_mimetype = "text/html"
+@@ -702,7 +702,7 @@ default_mimetype = "text/html"
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  
  ; UNIX: "/path1:/path2"
@@ -72,7 +72,7 @@ Last-Update: 2010-01-18
  ;include_path = ".;c:\php\includes"
 --- a/php.ini-production
 +++ b/php.ini-production
-@@ -690,7 +690,7 @@ default_mimetype = "text/html"
+@@ -702,7 +702,7 @@ default_mimetype = "text/html"
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  
  ; UNIX: "/path1:/path2"
@@ -81,11 +81,10 @@ Last-Update: 2010-01-18
  ;
  ; Windows: "\path1;\path2"
  ;include_path = ".;c:\php\includes"
-@@ -846,53 +846,6 @@ default_socket_timeout = 60
- ;
+@@ -859,52 +859,6 @@ default_socket_timeout = 60
  ; If you only provide the name of the extension, PHP will look for it in its
  ; default extension directory.
--;
+ ;
 -; Windows Extensions
 -; Note that ODBC support is built in, so no dll is needed for it.
 -; Note that many DLL files are located in the extensions/ (PHP 4) ext/ (PHP 5)
@@ -107,7 +106,7 @@ Last-Update: 2010-01-18
 -;extension=php_mysql.dll
 -;extension=php_mysqli.dll
 -;extension=php_oci8.dll      ; Use with Oracle 10gR2 Instant Client
--;extension=php_oci8_11g.dll  ; Use with Oracle 11g Instant Client
+-;extension=php_oci8_11g.dll  ; Use with Oracle 11gR2 Instant Client
 -;extension=php_openssl.dll
 -;extension=php_pdo_firebird.dll
 -;extension=php_pdo_mysql.dll

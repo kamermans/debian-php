@@ -12,7 +12,7 @@
  
 --- a/configure.in
 +++ b/configure.in
-@@ -1392,9 +1392,6 @@ AC_PROVIDE_IFELSE([PHP_REQUIRE_CXX], [],
+@@ -1399,9 +1399,6 @@ AC_PROVIDE_IFELSE([PHP_REQUIRE_CXX], [],
  ])
  AC_PROG_LIBTOOL
  
