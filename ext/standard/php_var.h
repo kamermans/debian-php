@@ -16,7 +16,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: php_var.h 321634 2012-01-01 13:15:04Z felipe $ */
+/* $Id: php_var.h 322070 2012-01-11 15:04:14Z dmitry $ */
 
 #ifndef PHP_VAR_H
 #define PHP_VAR_H
@@ -93,7 +93,7 @@ do { \
 			BG(unserialize).level = 1; \
 		} \
 	} else { \
-		(var_hash_ptr) = (php_serialize_data_t)BG(unserialize).var_hash; \
+		(var_hash_ptr) = (php_unserialize_data_t)BG(unserialize).var_hash; \
 		++BG(unserialize).level; \
 	} \
 } while (0)

@@ -1,4 +1,4 @@
-<?php # $Id: mkdist.php 320909 2011-12-12 15:09:52Z pajoye $
+<?php # $Id: mkdist.php 321952 2012-01-09 13:56:46Z pajoye $
 /* piece together a windows binary distro */
 
 $build_dir = $argv[1];
@@ -382,7 +382,7 @@ function copy_test_dir($directory, $dest)
 		$directory = substr($directory,0,-1);
 	}
 
-	if ($directory == 'tests') {
+	if ($directory == 'tests' || $directory == 'examples') {
 		if (!is_dir($dest . '/tests')) {
 			mkdir($dest . '/tests', 0775, true);
 		}
