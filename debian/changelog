@@ -1,3 +1,9 @@
+php5 (5.4.0~rc6-1) experimental; urgency=low
+
+  * Imported Upstream version 5.4.0~rc6
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 20 Jan 2012 15:30:48 +0100
+
 php5 (5.4.0~rc5-1) experimental; urgency=low
 
   * Imported Upstream version 5.4.0~rc5
