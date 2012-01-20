@@ -17,7 +17,7 @@
   +----------------------------------------------------------------------+
 */
 
-/* $Id: hash.c 321634 2012-01-01 13:15:04Z felipe $ */
+/* $Id: hash.c 322437 2012-01-18 09:15:34Z mike $ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -851,8 +851,6 @@ PHP_MINIT_FUNCTION(hash)
 	php_hash_register_algo("adler32",		&php_hash_adler32_ops);
 	php_hash_register_algo("crc32",			&php_hash_crc32_ops);
 	php_hash_register_algo("crc32b",		&php_hash_crc32b_ops);
-	php_hash_register_algo("salsa10",		&php_hash_salsa10_ops);
-	php_hash_register_algo("salsa20",		&php_hash_salsa20_ops);
 	php_hash_register_algo("fnv132",		&php_hash_fnv132_ops);
 	php_hash_register_algo("fnv164",		&php_hash_fnv164_ops);
 	php_hash_register_algo("joaat",			&php_hash_joaat_ops);
