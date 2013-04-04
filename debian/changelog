@@ -1,8 +1,8 @@
 php5 (5.5.0~beta2-2) experimental; urgency=low
 
-  * Fix gd_compat by moving gdImagePaletteToTrueColor to gd_color.c
-    (Closes: #704457)
-  * Fix GNU Hurd check in also in ext/opcache/config.m4 and configure
+  * Pull dcbaa13 from stas to really fix GNU Hurd builds
+  * Temporarily enable BUNDLED gd library to fix php5-gd
+   + This needs to be fixed before php 5.5 goes to unstable
 
  -- Ondřej Surý <ondrej@debian.org>  Tue, 02 Apr 2013 08:51:48 +0200
 
