@@ -3,6 +3,8 @@ php5 (5.5.0~beta2-2) experimental; urgency=low
   * Pull dcbaa13 from stas to really fix GNU Hurd builds
   * Temporarily enable BUNDLED gd library to fix php5-gd
    + This needs to be fixed before php 5.5 goes to unstable
+  * Add override for: libapache2-mod-php5: missing-dependency-on-phpapi
+  * Add an temporary override to allow embeded libgd2 in php5-gd
 
  -- Ondřej Surý <ondrej@debian.org>  Tue, 02 Apr 2013 08:51:48 +0200
 
