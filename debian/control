@@ -28,7 +28,7 @@ Build-Depends: apache2-dev (>= 2.4),
 	       libexpat1-dev (>= 1.95.2-2.1),
 	       libfreetype6-dev,
 	       libgcrypt11-dev,
-	       libgd2-dev (>= 2.1.0~alpha~4~),
+	       libgd-dev | libgd2-dev,
 	       libglib2.0-dev,
 	       libgmp3-dev,
 	       libicu-dev,
@@ -67,8 +67,8 @@ Build-Depends: apache2-dev (>= 2.4),
 	       tzdata
 Build-Conflicts: bind-dev
 Standards-Version: 3.9.3
-Vcs-Git: git://git.debian.org/pkg-php/php.git
-Vcs-Browser: http://git.debian.org/?p=pkg-php/php.git
+Vcs-Git: git://anonscm.debian.org/pkg-php/php.git
+Vcs-Browser: http://anonscm.debian.org/?p=pkg-php/php.git
 Homepage: http://www.php.net/
 
 Package: php5
