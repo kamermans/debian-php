@@ -140,3 +140,4 @@ cli-apache-sapi-segfault-on-objects-manipulation.patch
 fix-possible-resource-leak-and-make-sure-theres-something-to-qsort.patch
 php-streams.patch
 proc_open-separate-environment-values-that-arent-strings.patch
+copy-arginfo-incorrect-since-54.patch
