@@ -143,3 +143,4 @@ proc_open-separate-environment-values-that-arent-strings.patch
 copy-arginfo-incorrect-since-54.patch
 Out-of-memory-on-command-stream_get_contents.patch
 stream_socket_server-creates-wrong-Abstract-Namespace-UNIX-sockets.patch
+exit-in-stream-filter-produces-segfault.patch
