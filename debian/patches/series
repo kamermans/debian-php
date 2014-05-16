@@ -148,3 +148,4 @@ fpassthru-broken.patch
 Incorrect-object-comparison-with-inheritance.patch
 openssl_seal-memory-leak.patch
 Segfault-in-mysqli_stmt-bind_result-when-link-closed.patch
+Segmentation-fault-after-memory_limit.patch
