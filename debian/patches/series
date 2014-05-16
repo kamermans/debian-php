@@ -145,3 +145,4 @@ Out-of-memory-on-command-stream_get_contents.patch
 stream_socket_server-creates-wrong-Abstract-Namespace-UNIX-sockets.patch
 exit-in-stream-filter-produces-segfault.patch
 fpassthru-broken.patch
+Incorrect-object-comparison-with-inheritance.patch
