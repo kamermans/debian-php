@@ -1,3 +1,19 @@
+php5 (5.4.4-14+deb7u11) stable; urgency=medium
+
+  [ William Dauchy ]
+  * upstream fix: $env can be destructively changed.
+  * upstream fix: copy() arginfo incorrect since 5.4
+  * upstream fix: Out of memory on command stream_get_contents
+  * upstream fix: stream_socket_server() creates wrong Abstract Namespace UNIX sockets
+  * upstream fix: exit in stream filter produces segfault
+  * upstream fix: fpassthru broken
+  * upstream fix: Incorrect object comparison with inheritance
+  * upstream fix: openssl_seal() memory leak
+  * upstream fix: Segfault in mysqli_stmt::bind_result() when link closed
+  * upstream fix: Segmentation fault after memory_limit
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 27 May 2014 13:44:18 +0200
+
 php5 (5.4.4-14+deb7u10) stable-security; urgency=high
 
   * upstream fix: numerous file_printf calls resulting in performance
