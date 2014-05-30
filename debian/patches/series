@@ -141,3 +141,4 @@ fix-possible-resource-leak-and-make-sure-theres-something-to-qsort.patch
 php-streams.patch
 CVE-2014-0237.patch
 CVE-2014-0238.patch
+CVE-2014-2270.patch
