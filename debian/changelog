@@ -1,3 +1,15 @@
+php5 (5.4.4-14+deb7u10) stable-security; urgency=high
+
+  * upstream fix: numerous file_printf calls resulting in performance
+    degradation (CVE-2014-0237)
+  * upstream fix: CDF infinite loop in nelements DoS (CVE-2014-0238)
+  * upstream fix: out-of-bounds memory access in fileinfo (CVE-2014-2270)
+  * upstream fix: sapi/fpm: possible privilege escalation due to insecure
+    default configuration) (CVE-2014-0185)
+  * Set default listen.{owner,group} to www-data:www-data
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 30 May 2014 09:08:14 +0200
+
 php5 (5.4.4-14+deb7u9) stable; urgency=low
 
   [ William Dauchy ]
