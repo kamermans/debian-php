@@ -1,4 +1,4 @@
-php5 (5.4.4-14+deb7u11) stable; urgency=medium
+php5 (5.4.4-14+deb7u12) stable; urgency=medium
 
   [ William Dauchy ]
   * upstream fix: $env can be destructively changed.
@@ -13,6 +13,12 @@ php5 (5.4.4-14+deb7u11) stable; urgency=medium
   * upstream fix: Segmentation fault after memory_limit
 
  -- Ondřej Surý <ondrej@debian.org>  Tue, 27 May 2014 13:44:18 +0200
+
+php5 (5.4.4-14+deb7u11) stable-security; urgency=high
+
+  * [CVE-2014-4049]: Fix potential segfault in dns_get_record()
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 13 Jun 2014 15:43:03 +0200
 
 php5 (5.4.4-14+deb7u10) stable-security; urgency=high
 
