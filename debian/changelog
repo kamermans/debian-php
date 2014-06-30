@@ -1,3 +1,10 @@
+php5 (5.4.4-14+deb7u12) stable-security; urgency=high
+
+  * Pull upstream fix for phpinfo() Type Confusion Information Leak
+    (PHP#67498)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 30 Jun 2014 08:51:21 +0200
+
 php5 (5.4.4-14+deb7u11) stable-security; urgency=high
 
   * [CVE-2014-4049]: Fix potential segfault in dns_get_record()
