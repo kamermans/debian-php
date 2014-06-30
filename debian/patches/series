@@ -156,3 +156,4 @@ Segfault-in-mysqli_stmt-bind_result-when-link-closed.patch
 Segmentation-fault-after-memory_limit.patch
 bug67498.patch
 CVE-2014-3515.patch
+CVE-2014-0207.patch
