@@ -15,8 +15,14 @@ php5 (5.4.4-14+deb7u12) stable-security; urgency=high
   [ Ondřej Surý ]
   * Pull upstream fix for phpinfo() Type Confusion Information Leak
     (PHP#67498)
+  * [CVE-2014-3515]: fix unserialize() SPL ArrayObject / SPLObjectStorage Type Confusion
+  * [CVE-2014-0207]: fileinfo: cdf_read_short_sector insufficient boundary check
+  * [CVE-2014-3478]: fileinfo: mconvert incorrect handling of truncated pascal string size
+  * [CVE-2014-3479]: fileinfo: cdf_check_stream_offset insufficient boundary check
+  * [CVE-2014-3480]: fileinfo: cdf_count_chain insufficient boundary check
+  * [CVE-2014-3487]: fileinfo: cdf_read_property_info insufficient boundary check
 
- -- Ondřej Surý <ondrej@debian.org>  Mon, 30 Jun 2014 08:51:21 +0200
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 30 Jun 2014 14:55:00 +0200
 
 php5 (5.4.4-14+deb7u11) stable-security; urgency=high
 
