@@ -1,3 +1,22 @@
+php5 (5.4.4-14+deb7u13) stable; urgency=medium
+
+  * upstream fix: Cookies disabled when setting CURLOPT_COOKIEFILE to
+    empty string or NULL (Closes: #680260)
+  * upstream fix: Autoloader isn't called if two method definitions
+    don't match (Closes: #751738)
+  * upstream fix: OO API, walk: $suffix_as_key is not working correctly
+    (Closes: #731539)
+  * upstream fix: memory leak in FTPS functions results in denial of
+    service (Closes: #752366)
+  * upstream fix: Assigning to ArrayObject[null][something] overrides all
+    undefined variables (Closes: #726439)
+  * Backport sessionclean script from testing/unstable (Closes: #741254)
+  * d/changelog: Add CVE for phpinfo() Type Confusion Information Leak
+    Vulnerability
+  * d/NEWS: Adjust file name of default pool configuration
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Jul 2014 11:15:36 +0200
+
 php5 (5.4.4-14+deb7u12) stable-security; urgency=high
 
   [ William Dauchy ]
