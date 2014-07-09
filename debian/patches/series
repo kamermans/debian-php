@@ -164,3 +164,4 @@ CVE-2014-3487.patch
 CURLOPT_COOKIEFILE.patch
 fix-autoloader-if-two-method-definitions-doesnt-match.patch
 0001-Fix-bug-61981.patch
+0001-Bug-65228-FTPs-memory-leak-patch-by-marco-dot-beiere.patch
