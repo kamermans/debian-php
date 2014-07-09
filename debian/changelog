@@ -13,8 +13,7 @@ php5 (5.4.4-14+deb7u12) stable-security; urgency=high
   * upstream fix: Segmentation fault after memory_limit
 
   [ Ondřej Surý ]
-  * Pull upstream fix for phpinfo() Type Confusion Information Leak
-    (PHP#67498)
+  * [CVE-2014-4721]: Pull upstream fix for phpinfo() Type Confusion Information Leak
   * [CVE-2014-3515]: fix unserialize() SPL ArrayObject / SPLObjectStorage Type Confusion
   * [CVE-2014-0207]: fileinfo: cdf_read_short_sector insufficient boundary check
   * [CVE-2014-3478]: fileinfo: mconvert incorrect handling of truncated pascal string size
