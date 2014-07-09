@@ -162,3 +162,4 @@ CVE-2014-3479.patch
 CVE-2014-3480.patch
 CVE-2014-3487.patch
 CURLOPT_COOKIEFILE.patch
+fix-autoloader-if-two-method-definitions-doesnt-match.patch
