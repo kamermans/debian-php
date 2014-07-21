@@ -1,8 +1,10 @@
 
 Use -lldap_r by default.
 
---- php5.orig/ext/ldap/config.m4
-+++ php5/ext/ldap/config.m4
+Index: php/ext/ldap/config.m4
+===================================================================
+--- php.orig/ext/ldap/config.m4
++++ php/ext/ldap/config.m4
 @@ -117,7 +117,10 @@ if test "$PHP_LDAP" != "no"; then
      LDAP_PTHREAD=
    fi

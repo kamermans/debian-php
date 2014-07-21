@@ -4,8 +4,10 @@ Origin: vendor
 Forwarded: not-needed
 Last-Update: 2010-01-18
 
---- php5.orig/configure.in
-+++ php5/configure.in
+Index: php/configure.in
+===================================================================
+--- php.orig/configure.in
++++ php/configure.in
 @@ -1071,7 +1071,7 @@ if test "$PHP_CLI" = "no"; then
  fi
  
@@ -48,8 +50,10 @@ Last-Update: 2010-01-18
  
  exec_prefix=$old_exec_prefix
  libdir=$old_libdir
---- php5.orig/ext/ext_skel
-+++ php5/ext/ext_skel
+Index: php/ext/ext_skel
+===================================================================
+--- php.orig/ext/ext_skel
++++ php/ext/ext_skel
 @@ -70,7 +70,7 @@ if test -d "$extname" ; then
  fi
  
@@ -59,9 +63,11 @@ Last-Update: 2010-01-18
  fi
  
  ## convert skel_dir to full path
---- php5.orig/php.ini-development
-+++ php5/php.ini-development
-@@ -711,7 +711,7 @@ default_charset = "UTF-8"
+Index: php/php.ini-development
+===================================================================
+--- php.orig/php.ini-development
++++ php/php.ini-development
+@@ -704,7 +704,7 @@ default_charset = "UTF-8"
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  
  ; UNIX: "/path1:/path2"
@@ -70,9 +76,11 @@ Last-Update: 2010-01-18
  ;
  ; Windows: "\path1;\path2"
  ;include_path = ".;c:\php\includes"
---- php5.orig/php.ini-production
-+++ php5/php.ini-production
-@@ -709,7 +709,7 @@ default_charset = "UTF-8"
+Index: php/php.ini-production
+===================================================================
+--- php.orig/php.ini-production
++++ php/php.ini-production
+@@ -702,7 +702,7 @@ default_charset = "UTF-8"
  ;;;;;;;;;;;;;;;;;;;;;;;;;
  
  ; UNIX: "/path1:/path2"
@@ -81,7 +89,7 @@ Last-Update: 2010-01-18
  ;
  ; Windows: "\path1;\path2"
  ;include_path = ".;c:\php\includes"
-@@ -870,49 +870,6 @@ default_socket_timeout = 60
+@@ -863,49 +863,6 @@ default_socket_timeout = 60
  ; If you only provide the name of the extension, PHP will look for it in its
  ; default extension directory.
  ;
@@ -131,8 +139,10 @@ Last-Update: 2010-01-18
  
  ;;;;;;;;;;;;;;;;;;;
  ; Module Settings ;
---- php5.orig/sapi/cli/php.1.in
-+++ php5/sapi/cli/php.1.in
+Index: php/sapi/cli/php.1.in
+===================================================================
+--- php.orig/sapi/cli/php.1.in
++++ php/sapi/cli/php.1.in
 @@ -365,13 +365,14 @@ Shows configuration for extension
  Show configuration file names
  .SH FILES
@@ -153,8 +163,10 @@ Last-Update: 2010-01-18
  .SH EXAMPLES
  .TP 5
  \fIphp \-r 'echo "Hello World\\n";'\fP
---- php5.orig/scripts/Makefile.frag
-+++ php5/scripts/Makefile.frag
+Index: php/scripts/Makefile.frag
+===================================================================
+--- php.orig/scripts/Makefile.frag
++++ php/scripts/Makefile.frag
 @@ -3,8 +3,8 @@
  # Build environment install
  #
@@ -166,8 +178,10 @@ Last-Update: 2010-01-18
  
  BUILD_FILES = \
  	scripts/phpize.m4 \
---- php5.orig/scripts/php-config.in
-+++ php5/scripts/php-config.in
+Index: php/scripts/php-config.in
+===================================================================
+--- php.orig/scripts/php-config.in
++++ php/scripts/php-config.in
 @@ -6,9 +6,9 @@ datarootdir="@datarootdir@"
  exec_prefix="@exec_prefix@"
  version="@PHP_VERSION@"
@@ -181,8 +195,10 @@ Last-Update: 2010-01-18
  libs="@EXTRA_LIBS@"
  extension_dir='@EXTENSION_DIR@'
  man_dir=`eval echo @mandir@`
---- php5.orig/scripts/phpize.in
-+++ php5/scripts/phpize.in
+Index: php/scripts/phpize.in
+===================================================================
+--- php.orig/scripts/phpize.in
++++ php/scripts/phpize.in
 @@ -4,8 +4,8 @@
  prefix='@prefix@'
  datarootdir='@datarootdir@'
