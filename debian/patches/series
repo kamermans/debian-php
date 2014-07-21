@@ -25,12 +25,10 @@ lp564920-fix-big-files.patch
 temporary-path-fixes-for-multiarch.patch
 hurd-noptrace.diff
 php-5.3.9-mysqlnd.patch
-php-5.3.9-gnusrc.patch
 php-5.3.3-macropen.patch
 php-5.2.4-norpath.patch
 php-fpm-listen-on-unix-socket.patch
 php-5.2.4-embed.patch
-php-5.4.0-dlopen.patch
 php-fpm-m68k.patch
 expose_all_built_and_installed_apis.patch
 use_system_timezone.patch
