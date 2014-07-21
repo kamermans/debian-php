@@ -113,7 +113,7 @@ struct _php_core_globals {
 
 	zend_llist tick_functions;
 
-	zval *http_globals[6];
+	zval http_globals[6];
 
 	zend_bool expose_php;
 
@@ -135,7 +135,6 @@ struct _php_core_globals {
 	zend_bool during_request_startup;
 	zend_bool allow_url_fopen;
 	zend_bool enable_post_data_reading;
-	signed char always_populate_raw_post_data;
 	zend_bool report_zend_debug;
 
 	int last_error_type;

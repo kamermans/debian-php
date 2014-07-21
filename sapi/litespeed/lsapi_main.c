@@ -2,7 +2,7 @@
    +----------------------------------------------------------------------+
    | PHP Version 5                                                        |
    +----------------------------------------------------------------------+
-   | Copyright (c) 1997-2007 The PHP Group                                |
+   | Copyright (c) 1997-2014 The PHP Group                                |
    +----------------------------------------------------------------------+
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
@@ -15,8 +15,6 @@
    | Author: George Wang <gwang@litespeedtech.com>                        |
    +----------------------------------------------------------------------+
 */
-
-/* $Id: lsapi_main.c,v 1.57 2013/08/23 14:50:25 gwang Exp $ */
 
 #include "php.h"
 #include "SAPI.h"
@@ -157,7 +155,7 @@ static int sapi_lsapi_ub_write(const char *str, uint str_length TSRMLS_DC)
 
 /* {{{ sapi_lsapi_flush
  */
-static void sapi_lsapi_flush( void * server_context )
+static void sapi_lsapi_flush( void * server_context TSRMLS_DC )
 {
     if ( lsapi_mode ) {
         if ( LSAPI_Flush() == -1) {
@@ -372,7 +370,7 @@ static void sapi_lsapi_log_message(char *message TSRMLS_DC)
 static sapi_module_struct lsapi_sapi_module =
 {
     "litespeed",
-    "LiteSpeed V6.4",
+    "LiteSpeed V6.6",
 
     php_lsapi_startup,              /* startup */
     php_module_shutdown_wrapper,    /* shutdown */
@@ -737,9 +735,9 @@ static int cli_main( int argc, char * argv[] )
             case 'v':
                 if (php_request_startup(TSRMLS_C) != FAILURE) {
 #if ZEND_DEBUG
-                    php_printf("PHP %s (%s) (built: %s %s) (DEBUG)\nCopyright (c) 1997-2004 The PHP Group\n%s", PHP_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
+                    php_printf("PHP %s (%s) (built: %s %s) (DEBUG)\nCopyright (c) 1997-2014 The PHP Group\n%s", PHP_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
 #else
-                    php_printf("PHP %s (%s) (built: %s %s)\nCopyright (c) 1997-2004 The PHP Group\n%s", PHP_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
+                    php_printf("PHP %s (%s) (built: %s %s)\nCopyright (c) 1997-2014 The PHP Group\n%s", PHP_VERSION, sapi_module.name, __DATE__, __TIME__, get_zend_version());
 #endif
 #ifdef PHP_OUTPUT_NEWAPI
                     php_output_end_all(TSRMLS_C);
@@ -1092,7 +1090,7 @@ zend_module_entry litespeed_module_entry = {
 static int add_associate_array( const char * pKey, int keyLen, const char * pValue, int valLen,
                          void * arg )
 {
-    add_assoc_string_ex( (zval *)arg, (char *)pKey, keyLen+1, (char *)pValue, 1 );
+    add_assoc_string_ex( (zval *)arg, (char *)pKey, keyLen+1, (char *)pValue);
     return 1;
 }
 
@@ -1146,7 +1144,7 @@ PHP_FUNCTION(litespeed_response_headers)
                 headerBuf[len] = 0;
                 if ( len ) {
                     while( isspace(*++p));
-                    add_assoc_string_ex(return_value, headerBuf, len+1, p, 1 );
+                    add_assoc_string_ex(return_value, headerBuf, len+1, p);
                 }
             }
         }
@@ -1166,10 +1164,10 @@ PHP_FUNCTION(apache_get_modules)
         WRONG_PARAM_COUNT;
     }
     array_init(return_value);
-    add_next_index_string(return_value, "mod_rewrite", 1);
-    add_next_index_string(return_value, "mod_mime", 1);
-    add_next_index_string(return_value, "mod_headers", 1);
-    add_next_index_string(return_value, "mod_expires", 1);
+    add_next_index_string(return_value, "mod_rewrite");
+    add_next_index_string(return_value, "mod_mime");
+    add_next_index_string(return_value, "mod_headers");
+    add_next_index_string(return_value, "mod_expires");
 }
 /* }}} */
 

@@ -187,10 +187,12 @@ typedef struct _user_config_cache_entry {
 	HashTable *user_config;
 } user_config_cache_entry;
 
-static void user_config_cache_entry_dtor(user_config_cache_entry *entry)
+static void user_config_cache_entry_dtor(zval *el)
 {
+	user_config_cache_entry *entry = (user_config_cache_entry *)Z_PTR_P(el);
 	zend_hash_destroy(entry->user_config);
 	free(entry->user_config);
+	free(entry);
 }
 /* }}} */
 
@@ -215,30 +217,31 @@ static php_cgi_globals_struct php_cgi_globals;
 #define TRANSLATE_SLASHES(path)
 #endif
 
-static int print_module_info(zend_module_entry *module, void *arg TSRMLS_DC)
+static int print_module_info(zval *element TSRMLS_DC)
 {
+	zend_module_entry *module = Z_PTR_P(element);
 	php_printf("%s\n", module->name);
-	return 0;
+	return ZEND_HASH_APPLY_KEEP;
 }
 
 static int module_name_cmp(const void *a, const void *b TSRMLS_DC)
 {
-	Bucket *f = *((Bucket **) a);
-	Bucket *s = *((Bucket **) b);
+	Bucket *f = (Bucket *) a;
+	Bucket *s = (Bucket *) b;
 
-	return strcasecmp(	((zend_module_entry *)f->pData)->name,
-						((zend_module_entry *)s->pData)->name);
+	return strcasecmp(	((zend_module_entry *)Z_PTR(f->val))->name,
+						((zend_module_entry *)Z_PTR(s->val))->name);
 }
 
 static void print_modules(TSRMLS_D)
 {
 	HashTable sorted_registry;
-	zend_module_entry tmp;
 
-	zend_hash_init(&sorted_registry, 50, NULL, NULL, 1);
-	zend_hash_copy(&sorted_registry, &module_registry, NULL, &tmp, sizeof(zend_module_entry));
+	zend_hash_init(&sorted_registry, 64, NULL, NULL, 1);
+//???	zend_hash_copy(&sorted_registry, &module_registry, NULL, &tmp, sizeof(zend_module_entry));
+	zend_hash_copy(&sorted_registry, &module_registry, NULL);
 	zend_hash_sort(&sorted_registry, zend_qsort, module_name_cmp, 0 TSRMLS_CC);
-	zend_hash_apply_with_argument(&sorted_registry, (apply_func_arg_t) print_module_info, NULL TSRMLS_CC);
+	zend_hash_apply(&sorted_registry, print_module_info TSRMLS_CC);
 	zend_hash_destroy(&sorted_registry);
 }
 
@@ -324,14 +327,14 @@ static int sapi_fcgi_ub_write(const char *str, uint str_length TSRMLS_DC)
 	return str_length;
 }
 
-static void sapi_cgi_flush(void *server_context)
+static void sapi_cgi_flush(void *server_context TSRMLS_DC)
 {
 	if (fflush(stdout) == EOF) {
 		php_handle_aborted_connection();
 	}
 }
 
-static void sapi_fcgi_flush(void *server_context)
+static void sapi_fcgi_flush(void *server_context TSRMLS_DC)
 {
 	fcgi_request *request = (fcgi_request*) server_context;
 
@@ -619,7 +622,7 @@ static char *sapi_fcgi_read_cookies(TSRMLS_D)
 static void cgi_php_load_env_var(char *var, unsigned int var_len, char *val, unsigned int val_len, void *arg TSRMLS_DC)
 {
 	zval *array_ptr = (zval*)arg;	
-	int filter_arg = (array_ptr == PG(http_globals)[TRACK_VARS_ENV])?PARSE_ENV:PARSE_SERVER;
+	int filter_arg = (Z_ARR_P(array_ptr) == Z_ARR(PG(http_globals)[TRACK_VARS_ENV]))?PARSE_ENV:PARSE_SERVER;
 	unsigned int new_val_len;
 
 	if (sapi_module.input_filter(filter_arg, var, &val, strlen(val), &new_val_len TSRMLS_CC)) {
@@ -629,25 +632,19 @@ static void cgi_php_load_env_var(char *var, unsigned int var_len, char *val, uns
 
 static void cgi_php_import_environment_variables(zval *array_ptr TSRMLS_DC)
 {
-	if (PG(http_globals)[TRACK_VARS_ENV] &&
-		array_ptr != PG(http_globals)[TRACK_VARS_ENV] &&
-		Z_TYPE_P(PG(http_globals)[TRACK_VARS_ENV]) == IS_ARRAY &&
-		zend_hash_num_elements(Z_ARRVAL_P(PG(http_globals)[TRACK_VARS_ENV])) > 0
+	if (Z_TYPE(PG(http_globals)[TRACK_VARS_ENV]) == IS_ARRAY &&
+		Z_ARR_P(array_ptr) != Z_ARR(PG(http_globals)[TRACK_VARS_ENV]) &&
+		zend_hash_num_elements(Z_ARRVAL(PG(http_globals)[TRACK_VARS_ENV])) > 0
 	) {
 		zval_dtor(array_ptr);
-		*array_ptr = *PG(http_globals)[TRACK_VARS_ENV];
-		INIT_PZVAL(array_ptr);
-		zval_copy_ctor(array_ptr);
+		ZVAL_DUP(array_ptr, &PG(http_globals)[TRACK_VARS_ENV]);
 		return;
-	} else if (PG(http_globals)[TRACK_VARS_SERVER] &&
-		array_ptr != PG(http_globals)[TRACK_VARS_SERVER] &&
-		Z_TYPE_P(PG(http_globals)[TRACK_VARS_SERVER]) == IS_ARRAY &&
-		zend_hash_num_elements(Z_ARRVAL_P(PG(http_globals)[TRACK_VARS_SERVER])) > 0
+	} else if (Z_TYPE(PG(http_globals)[TRACK_VARS_SERVER]) == IS_ARRAY &&
+		Z_ARR_P(array_ptr) != Z_ARR(PG(http_globals)[TRACK_VARS_SERVER]) &&
+		zend_hash_num_elements(Z_ARRVAL(PG(http_globals)[TRACK_VARS_SERVER])) > 0
 	) {
 		zval_dtor(array_ptr);
-		*array_ptr = *PG(http_globals)[TRACK_VARS_SERVER];
-		INIT_PZVAL(array_ptr);
-		zval_copy_ctor(array_ptr);
+		ZVAL_DUP(array_ptr, &PG(http_globals)[TRACK_VARS_SERVER]);
 		return;
 	}
 
@@ -758,13 +755,12 @@ static void php_cgi_ini_activate_user_config(char *path, int path_len, const cha
 	time_t request_time = sapi_get_request_time(TSRMLS_C);
 
 	/* Find cached config entry: If not found, create one */
-	if (zend_hash_find(&CGIG(user_config_cache), path, path_len + 1, (void **) &entry) == FAILURE) {
+	if ((entry = zend_hash_str_find_ptr(&CGIG(user_config_cache), path, path_len)) == NULL) {
 		new_entry = pemalloc(sizeof(user_config_cache_entry), 1);
 		new_entry->expires = 0;
 		new_entry->user_config = (HashTable *) pemalloc(sizeof(HashTable), 1);
-		zend_hash_init(new_entry->user_config, 0, NULL, (dtor_func_t) config_zval_dtor, 1);
-		zend_hash_update(&CGIG(user_config_cache), path, path_len + 1, new_entry, sizeof(user_config_cache_entry), (void **) &entry);
-		free(new_entry);
+		zend_hash_init(new_entry->user_config, 8, NULL, (dtor_func_t) config_zval_dtor, 1);
+		entry = zend_hash_str_update_ptr(&CGIG(user_config_cache), path, path_len, new_entry);
 	}
 
 	/* Check whether cache entry has expired and rescan if it is */
@@ -852,7 +848,7 @@ static int sapi_cgi_activate(TSRMLS_D)
 			server_name_len = strlen(server_name);
 			server_name = estrndup(server_name, server_name_len);
 			zend_str_tolower(server_name, server_name_len);
-			php_ini_activate_per_host_config(server_name, server_name_len + 1 TSRMLS_CC);
+			php_ini_activate_per_host_config(server_name, server_name_len TSRMLS_CC);
 			efree(server_name);
 		}
 	}
@@ -928,7 +924,7 @@ static int sapi_cgi_deactivate(TSRMLS_D)
 				php_handle_aborted_connection();
 			}
 		} else {
-			sapi_cgi_flush(SG(server_context));
+			sapi_cgi_flush(SG(server_context) TSRMLS_CC);
 		}
 	}
 	return SUCCESS;
@@ -1482,7 +1478,7 @@ static void php_cgi_globals_ctor(php_cgi_globals_struct *php_cgi_globals TSRMLS_
 #ifdef PHP_WIN32
 	php_cgi_globals->impersonate = 0;
 #endif
-	zend_hash_init(&php_cgi_globals->user_config_cache, 0, NULL, (dtor_func_t) user_config_cache_entry_dtor, 1);
+	zend_hash_init(&php_cgi_globals->user_config_cache, 8, NULL, user_config_cache_entry_dtor, 1);
 }
 /* }}} */
 
@@ -1571,7 +1567,7 @@ static void add_request_header(char *var, unsigned int var_len, char *val, unsig
 	} else {
 		return;
 	}
-	add_assoc_stringl_ex(return_value, var, var_len+1, val, val_len, 1);
+	add_assoc_stringl_ex(return_value, var, var_len+1, val, val_len);
 	if (str) {
 		free_alloca(var, use_heap);
 	}
@@ -1652,7 +1648,7 @@ PHP_FUNCTION(apache_request_headers) /* {{{ */
 				continue;
 			}
 			val++;
-			add_assoc_string_ex(return_value, var, var_len+1, val, 1);
+			add_assoc_string_ex(return_value, var, var_len, val);
 		}
 		if (t != buf && t != NULL) {
 			efree(t);
@@ -1681,7 +1677,7 @@ static void add_response_header(sapi_header_struct *h, zval *return_value TSRMLS
 				do {
 					p++;
 				} while (*p == ' ' || *p == '\t');
-				add_assoc_stringl_ex(return_value, s, len+1, p, h->header_len - (p - h->header), 1);
+				add_assoc_stringl_ex(return_value, s, len, p, h->header_len - (p - h->header));
 				free_alloca(s, use_heap);
 			}
 		}
@@ -2240,7 +2236,7 @@ consult the installation file that came with this distribution, or visit \n\
 							break;
 
 						case 'z': /* load extension file */
-							zend_load_extension(php_optarg);
+							zend_load_extension(php_optarg TSRMLS_CC);
 							break;
 
 						default:
@@ -2250,7 +2246,7 @@ consult the installation file that came with this distribution, or visit \n\
 
 				if (script_file) {
 					/* override path_translated if -f on command line */
-					STR_FREE(SG(request_info).path_translated);
+					if (SG(request_info).path_translated) efree(SG(request_info).path_translated);
 					SG(request_info).path_translated = script_file;
 					/* before registering argv to module exchange the *new* argv[0] */
 					/* we can achieve this without allocating more memory */
@@ -2259,7 +2255,7 @@ consult the installation file that came with this distribution, or visit \n\
 					SG(request_info).argv[0] = script_file;
 				} else if (argc > php_optind) {
 					/* file is on command line, but not in -f opt */
-					STR_FREE(SG(request_info).path_translated);
+					if (SG(request_info).path_translated) efree(SG(request_info).path_translated);
 					SG(request_info).path_translated = estrdup(argv[php_optind]);
 					/* arguments after the file are considered script args */
 					SG(request_info).argc = argc - php_optind;
@@ -2362,7 +2358,7 @@ consult the installation file that came with this distribution, or visit \n\
 						goto fastcgi_request_done;
 					}
 
-					STR_FREE(SG(request_info).path_translated);
+					if (SG(request_info).path_translated) efree(SG(request_info).path_translated);
 
 					if (free_query_string && SG(request_info).query_string) {
 						free(SG(request_info).query_string);
@@ -2493,7 +2489,7 @@ consult the installation file that came with this distribution, or visit \n\
 				/* Zeev might want to do something with this one day */
 				case PHP_MODE_INDENT:
 					open_file_for_scanning(&file_handle TSRMLS_CC);
-					zend_indent();
+					zend_indent(TSRMLS_C);
 					zend_file_handle_dtor(&file_handle TSRMLS_CC);
 					php_output_teardown();
 					return SUCCESS;
@@ -2503,7 +2499,7 @@ consult the installation file that came with this distribution, or visit \n\
 
 fastcgi_request_done:
 			{
-				STR_FREE(SG(request_info).path_translated);
+				if (SG(request_info).path_translated) efree(SG(request_info).path_translated);
 
 				php_request_shutdown((void *) 0);
 

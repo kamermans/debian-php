@@ -57,7 +57,7 @@ static size_t php_sockop_write(php_stream *stream, const char *buf, size_t count
 	int didwrite;
 	struct timeval *ptimeout;
 
-	if (sock->socket == -1) {
+	if (!sock || sock->socket == -1) {
 		return 0;
 	}
 
@@ -116,7 +116,7 @@ static void php_sock_stream_wait_for_data(php_stream *stream, php_netstream_data
 	int retval;
 	struct timeval *ptimeout;
 
-	if (sock->socket == -1) {
+	if (!sock || sock->socket == -1) {
 		return;
 	}
 	
@@ -146,7 +146,7 @@ static size_t php_sockop_read(php_stream *stream, char *buf, size_t count TSRMLS
 	php_netstream_data_t *sock = (php_netstream_data_t*)stream->abstract;
 	int nr_bytes = 0;
 
-	if (sock->socket == -1) {
+	if (!sock || sock->socket == -1) {
 		return 0;
 	}
 
@@ -178,6 +178,10 @@ static int php_sockop_close(php_stream *stream, int close_handle TSRMLS_DC)
 #ifdef PHP_WIN32
 	int n;
 #endif
+
+	if (!sock) {
+		return 0;
+	}
 
 	if (close_handle) {
 
@@ -271,6 +275,10 @@ static int php_sockop_set_option(php_stream *stream, int option, int value, void
 	php_netstream_data_t *sock = (php_netstream_data_t*)stream->abstract;
 	php_stream_xport_param *xparam;
 	
+	if (!sock) {
+		return PHP_STREAM_OPTION_RETURN_NOTIMPL;
+	}
+
 	switch(option) {
 		case PHP_STREAM_OPTION_CHECK_LIVENESS:
 			{
@@ -412,6 +420,10 @@ static int php_sockop_set_option(php_stream *stream, int option, int value, void
 static int php_sockop_cast(php_stream *stream, int castas, void **ret TSRMLS_DC)
 {
 	php_netstream_data_t *sock = (php_netstream_data_t*)stream->abstract;
+
+	if (!sock) {
+		return FAILURE;
+	}
 
 	switch(castas)	{
 		case PHP_STREAM_AS_STDIO:
@@ -619,7 +631,7 @@ static inline int php_tcp_sockop_connect(php_stream *stream, php_netstream_data_
 	int portno, bindport = 0;
 	int err = 0;
 	int ret;
-	zval **tmpzval = NULL;
+	zval *tmpzval = NULL;
 
 #ifdef AF_UNIX
 	if (stream->ops == &php_stream_unix_socket_ops || stream->ops == &php_stream_unixdg_socket_ops) {
@@ -654,15 +666,15 @@ static inline int php_tcp_sockop_connect(php_stream *stream, php_netstream_data_
 		return -1;
 	}
 
-	if (stream->context && php_stream_context_get_option(stream->context, "socket", "bindto", &tmpzval) == SUCCESS) {
-		if (Z_TYPE_PP(tmpzval) != IS_STRING) {
+	if (stream->context && (tmpzval = php_stream_context_get_option(stream->context, "socket", "bindto")) != NULL) {
+		if (Z_TYPE_P(tmpzval) != IS_STRING) {
 			if (xparam->want_errortext) {
 				spprintf(&xparam->outputs.error_text, 0, "local_addr context option is not a string.");
 			}
 			efree(host);
 			return -1;
 		}
-		bindto = parse_ip_address_ex(Z_STRVAL_PP(tmpzval), Z_STRLEN_PP(tmpzval), &bindport, xparam->want_errortext, &xparam->outputs.error_text TSRMLS_CC);
+		bindto = parse_ip_address_ex(Z_STRVAL_P(tmpzval), Z_STRLEN_P(tmpzval), &bindport, xparam->want_errortext, &xparam->outputs.error_text TSRMLS_CC);
 	}
 
 	/* Note: the test here for php_stream_udp_socket_ops is important, because we
@@ -734,7 +746,7 @@ static inline int php_tcp_sockop_accept(php_stream *stream, php_netstream_data_t
 			if (xparam->outputs.client) {
 				xparam->outputs.client->context = stream->context;
 				if (stream->context) {
-					zend_list_addref(stream->context->rsrc_id);
+					GC_REFCOUNT(stream->context->res)++;
 				}
 			}
 		}

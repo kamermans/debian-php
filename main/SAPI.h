@@ -133,7 +133,7 @@ typedef struct _sapi_globals_struct {
 	zend_bool sapi_started;
 	double global_request_time;
 	HashTable known_post_content_types;
-	zval *callback_func;
+	zval callback_func;
 	zend_fcall_info_cache fci_cache;
 	zend_bool callback_run;
 } sapi_globals_struct;
@@ -228,7 +228,7 @@ struct _sapi_module_struct {
 	int (*deactivate)(TSRMLS_D);
 
 	int (*ub_write)(const char *str, unsigned int str_length TSRMLS_DC);
-	void (*flush)(void *server_context);
+	void (*flush)(void *server_context TSRMLS_DC);
 	struct stat *(*get_stat)(TSRMLS_D);
 	char *(*getenv)(char *name, size_t name_len TSRMLS_DC);
 

@@ -47,7 +47,7 @@ static void php_fsockopen_stream(INTERNAL_FUNCTION_PARAMETERS, int persistent)
 
 	RETVAL_FALSE;
 	
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|lzzd", &host, &host_len, &port, &zerrno, &zerrstr, &timeout) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|lz/z/d", &host, &host_len, &port, &zerrno, &zerrstr, &timeout) == FAILURE) {
 		RETURN_FALSE;
 	}
 
@@ -73,7 +73,7 @@ static void php_fsockopen_stream(INTERNAL_FUNCTION_PARAMETERS, int persistent)
 	}
 	if (zerrstr) {
 		zval_dtor(zerrstr);
-		ZVAL_STRING(zerrstr, "", 1);
+		ZVAL_EMPTY_STRING(zerrstr);
 	}
 
 	stream = php_stream_xport_create(hostname, hostname_len, REPORT_ERRORS,
@@ -98,9 +98,10 @@ static void php_fsockopen_stream(INTERNAL_FUNCTION_PARAMETERS, int persistent)
 		if (zerrstr && errstr) {
 			/* no need to dup; we need to efree buf anyway */
 			zval_dtor(zerrstr);
-			ZVAL_STRING(zerrstr, errstr, 0);
-		}
-		else if (!zerrstr && errstr) {
+			// TODO: avoid reallocation ???
+			ZVAL_STRING(zerrstr, errstr);
+			efree(errstr);
+		} else if (!zerrstr && errstr) {
 			efree(errstr);
 		} 
 
@@ -123,6 +124,7 @@ PHP_FUNCTION(fsockopen)
 	php_fsockopen_stream(INTERNAL_FUNCTION_PARAM_PASSTHRU, 0);
 }
 /* }}} */
+
 /* {{{ proto resource pfsockopen(string hostname, int port [, int errno [, string errstr [, float timeout]]])
    Open persistent Internet or Unix domain socket connection */
 PHP_FUNCTION(pfsockopen)
