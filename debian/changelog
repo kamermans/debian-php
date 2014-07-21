@@ -1,3 +1,9 @@
+php5 (5.7.0~20140718git6cc487d+dfsg-1) unstable; urgency=medium
+
+  * Build from phpng branch. Git revision: 6cc487d
+
+ -- Lior Kaplan <lior.k@zend.com>  Mon, 21 Jul 2014 18:27:39 +0300
+
 php5 (5.6.0~rc2+dfsg-5) unstable; urgency=medium
 
   * Fix null byte suffix after keys in getallheaders() result
