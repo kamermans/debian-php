@@ -164,6 +164,7 @@ BUILTIN_EXTENSION_CHECK=$$e=get_loaded_extensions(); natcasesort($$e); \
 prepared: prepared-stamp
 prepared-stamp:
 	dh_testdir
+	./genfiles
 	sed -i -e 's/EXTRA_VERSION=""/EXTRA_VERSION="-$(PHP5_DEBIAN_REVISION)"/' configure.in
 	./buildconf --force
 	touch prepared-stamp
