@@ -62,7 +62,8 @@ else
 endif
 
 ifeq ($(DEB_HOST_ARCH),$(filter $(DEB_HOST_ARCH),amd64 armel armhf i386 ia64 powerpc))
-  CONFIGURE_DTRACE_ARGS = --enable-dtrace
+  #CONFIGURE_DTRACE_ARGS = --enable-dtrace
+  CONFIGURE_DTRACE_ARGS = --disable-dtrace
 else
   CONFIGURE_DTRACE_ARGS = --disable-dtrace
 endif
