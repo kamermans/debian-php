@@ -168,3 +168,4 @@ fix-autoloader-if-two-method-definitions-doesnt-match.patch
 0001-Fixed-bug-62987-Assigning-to-ArrayObject-null-someth.patch
 CVE-2014-3538.patch
 dbs-parser.patch.patch.txt
+file-upstream.patch.patch.txt
