@@ -1,7 +1,5 @@
-Index: php/ext/mysqlnd/mysqlnd.c
-===================================================================
---- php.orig/ext/mysqlnd/mysqlnd.c
-+++ php/ext/mysqlnd/mysqlnd.c
+--- a/ext/mysqlnd/mysqlnd.c
++++ b/ext/mysqlnd/mysqlnd.c
 @@ -945,7 +945,7 @@ MYSQLND_METHOD(mysqlnd_conn_data, connec
  		if (host_len == sizeof("localhost") - 1 && !strncasecmp(host, "localhost", host_len)) {
  			DBG_INF_FMT("socket=%s", socket_or_pipe? socket_or_pipe:"n/a");
@@ -11,10 +9,8 @@ Index: php/ext/mysqlnd/mysqlnd.c
  			}
  			transport_len = mnd_sprintf(&transport, 0, "unix://%s", socket_or_pipe);
  			unix_socket = TRUE;
-Index: php/ext/pdo_mysql/pdo_mysql.c
-===================================================================
---- php.orig/ext/pdo_mysql/pdo_mysql.c
-+++ php/ext/pdo_mysql/pdo_mysql.c
+--- a/ext/pdo_mysql/pdo_mysql.c
++++ b/ext/pdo_mysql/pdo_mysql.c
 @@ -50,7 +50,7 @@ ZEND_DECLARE_MODULE_GLOBALS(pdo_mysql)
  #  define PDO_MYSQL_UNIX_ADDR PHP_MYSQL_UNIX_SOCK_ADDR
  # else

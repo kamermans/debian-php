@@ -17,10 +17,8 @@ r3: fix a crash if /usr/share/zoneinfo doesn't exist (Raphael Geissert)
 r2: add filesystem trawl to set up name alias index
 r1: initial revision
 
-Index: php/ext/date/lib/parse_tz.c
-===================================================================
---- php.orig/ext/date/lib/parse_tz.c
-+++ php/ext/date/lib/parse_tz.c
+--- a/ext/date/lib/parse_tz.c
++++ b/ext/date/lib/parse_tz.c
 @@ -18,8 +18,22 @@
  
  /* $Id$ */
@@ -621,10 +619,8 @@ Index: php/ext/date/lib/parse_tz.c
  	} else {
  		tmp = NULL;
  	}
-Index: php/ext/date/lib/timelib.m4
-===================================================================
---- php.orig/ext/date/lib/timelib.m4
-+++ php/ext/date/lib/timelib.m4
+--- a/ext/date/lib/timelib.m4
++++ b/ext/date/lib/timelib.m4
 @@ -78,3 +78,17 @@ stdlib.h
  
  dnl Check for strtoll, atoll

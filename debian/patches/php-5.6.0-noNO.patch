@@ -1,7 +1,5 @@
-Index: php/ext/standard/tests/strings/setlocale_variation2.phpt
-===================================================================
---- php.orig/ext/standard/tests/strings/setlocale_variation2.phpt
-+++ php/ext/standard/tests/strings/setlocale_variation2.phpt
+--- a/ext/standard/tests/strings/setlocale_variation2.phpt
++++ b/ext/standard/tests/strings/setlocale_variation2.phpt
 @@ -52,6 +52,7 @@ $all_system_locales = list_system_locale
  //try different locale names	
  $failure_locale = array();

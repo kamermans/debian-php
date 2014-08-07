@@ -1,7 +1,5 @@
-Index: php/acinclude.m4
-===================================================================
---- php.orig/acinclude.m4
-+++ php/acinclude.m4
+--- a/acinclude.m4
++++ b/acinclude.m4
 @@ -2392,9 +2392,7 @@ AC_DEFUN([PHP_SETUP_OPENSSL],[
  
      PHP_ADD_INCLUDE($OPENSSL_INCDIR)

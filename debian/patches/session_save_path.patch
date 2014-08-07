@@ -5,11 +5,9 @@ Origin: vendor
 Forwarded: not-needed
 Last-Update: 2010-05-01
 
-Index: php/ext/session/session.c
-===================================================================
---- php.orig/ext/session/session.c
-+++ php/ext/session/session.c
-@@ -774,7 +774,7 @@ static PHP_INI_MH(OnUpdateRfc1867Freq) /
+--- a/ext/session/session.c
++++ b/ext/session/session.c
+@@ -775,7 +775,7 @@ static PHP_INI_MH(OnUpdateRfc1867Freq) /
  /* {{{ PHP_INI
   */
  PHP_INI_BEGIN()
@@ -18,10 +16,8 @@ Index: php/ext/session/session.c
  	STD_PHP_INI_ENTRY("session.name",               "PHPSESSID", PHP_INI_ALL, OnUpdateName, session_name,       php_ps_globals,    ps_globals)
  	PHP_INI_ENTRY("session.save_handler",           "files",     PHP_INI_ALL, OnUpdateSaveHandler)
  	STD_PHP_INI_BOOLEAN("session.auto_start",       "0",         PHP_INI_PERDIR, OnUpdateBool,   auto_start,         php_ps_globals,    ps_globals)
-Index: php/php.ini-development
-===================================================================
---- php.orig/php.ini-development
-+++ php/php.ini-development
+--- a/php.ini-development
++++ b/php.ini-development
 @@ -1416,7 +1416,7 @@ session.save_handler = files
  ; where MODE is the octal representation of the mode. Note that this
  ; does not overwrite the process's umask.
@@ -31,10 +27,8 @@ Index: php/php.ini-development
  
  ; Whether to use strict session mode.
  ; Strict session mode does not accept uninitialized session ID and regenerate
-Index: php/php.ini-production
-===================================================================
---- php.orig/php.ini-production
-+++ php/php.ini-production
+--- a/php.ini-production
++++ b/php.ini-production
 @@ -1365,7 +1365,7 @@ session.save_handler = files
  ; where MODE is the octal representation of the mode. Note that this
  ; does not overwrite the process's umask.

@@ -1,7 +1,5 @@
-Index: php/tests/func/null-new_val.phpt
-===================================================================
 --- /dev/null
-+++ php/tests/func/null-new_val.phpt
++++ b/tests/func/null-new_val.phpt
 @@ -0,0 +1,10 @@
 +--TEST--
 +ini_restore strcmp NULL new_val
