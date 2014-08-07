@@ -1,3 +1,9 @@
+php5 (5.7.0~20140807git414762f+dfsg-1) unstable; urgency=medium
+
+  * Build from phpng branch. Git revision: 414762f
+
+ -- Lior Kaplan <lior.k@zend.com>  Thu, 07 Aug 2014 18:10:30 +0300
+
 php5 (5.7.0~20140718git6cc487d+dfsg-1) unstable; urgency=medium
 
   * Build from phpng branch. Git revision: 6cc487d
